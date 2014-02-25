@@ -35,6 +35,3 @@ Pokelist is written in the form of one Pokemon per line, with formatting
 PokemonName,TYPE1/TYPE2
 If the Pokemon only has one type, then the format will be
 PokemonName,TYPE1
-
-
-

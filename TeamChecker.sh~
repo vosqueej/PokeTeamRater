@@ -1,0 +1,74 @@
+#!/bin/bash
+
+#This bash script is meant to check a given team's defensive weaknesses, and in the future the type coverage of their attacks.
+#I would love to eventually refer to Smogon or something and tell them which sets in particular they are weak to (DD Mence vs Mixmence as an example).
+
+#Version 0.1 Notes
+#-----------------
+#-Began writing on Feb 24 2014.
+#-Writing completed on 
+#
+#Features:
+#Takes input as a list of Pokemon. Does not consider moves, EVs, IVs, abilities, items, etc.
+#Type conventions:
+#Normal -> NRM
+#Fire -> FIR
+#Fighting -> FGT
+#Water -> WTR
+#Flying -> FLY
+#Grass -> GRS
+#Poison -> POI
+#Electric -> ELE
+#Ground -> GRD
+#Psychic -> PSY
+#Rock -> RCK
+#Ice -> ICE
+#Bug -> BUG
+#Dragon -> DRG
+#Ghost -> GST
+#Dark -> DRK
+#Steel -> STL
+#Fairy -> FAI
+
+#This calculator is current to the 6th generation of Pokemon games (X/Y). All Pokemon from previous games who had changed types have had their types listed as the most recent one (eg. Clefairy is a Fairy type, not a Normal type).
+#Current version only works for the first generation of Pokemon, that is from National dex 001 to 151, however it will be easy to implement later generations.
+
+#Pokelist is written in the form of one Pokemon per line, with formatting
+#PokemonName,TYPE1/TYPE2
+#If the Pokemon only has one type, then the format will be
+#PokemonName,TYPE1
+
+#Below: Pokemon Checker
+list=`cat Pokedex`
+#Need to take input and read Pokefile to find if the Pokemon exists 
+for Pokes in $@
+do #will go through each Pokemon
+echo $Pokes
+Search=$(cat Pokedex | grep -w -i $Pokes) #remember -w matches only the strin(Kabuto not Kabutops) and -i makes it case insensitive
+if ! [ $Search ] #ERROR HANDLING YEAH
+	then Search="Error"
+fi
+echo "This is search: $Search"
+#while read list #reads Pokedex
+#do
+
+if [ $Search = "Error" ]
+then echo "I don't know Missingno.'s stats. Try again." #Ya done goofed.
+
+else
+	Pokemon=${Search%,*} #Saves the Pokemon's name in $Pokemon
+	Type=${Search##*,} #Saves the Pokemon's type in $Type
+	Type1=${Type%/*} #First type is saved as $Type1
+	Type2=${Type##*/} #Second type is saved as $Type2
+	echo "Pokemon: $Pokemon"
+	echo "Type: $Type"
+	echo "First type: $Type1"
+	if ! [ $Type1 == $Type2 ] #Makes sure the Pokemon has more than one type before printing the second type
+		then echo "Second type: $Type2"
+
+fi
+fi
+#done <"$list"
+
+done
+
